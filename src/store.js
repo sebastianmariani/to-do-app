@@ -3,14 +3,11 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex)
 
-const store = new Vuex.Store({
+export const store = new Vuex.Store({
     state: {
-        listToDo: [],
+        list: [],
     },
     getters: {
-        listToDo: state => state.listToDo,
-    },
-    mutations: {
-
+        listToDo: state => state.list,
     }
 })
