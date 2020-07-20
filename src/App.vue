@@ -1,10 +1,12 @@
 <template>
   <div id="app">
-    <div class="header">
-      <h1>Simplify your life</h1>
+    <h1>Simplify your life</h1>
+    <div class="headers">
+      <add-to-do></add-to-do>
     </div>
-    <add-to-do></add-to-do>
-    <show-list></show-list>
+    <div class="showList">
+      <show-list></show-list>
+    </div>
   </div>
 </template>
 
@@ -21,5 +23,18 @@ export default {
 </script>
 
 <style>
-
+body{
+  background-color: #dbdfe1;
+}
+#app {
+  text-align: center;
+  margin: 3%;
+}
+.headers {
+  margin: 3% 0%;
+  display: inline-block;
+}
+.showList {
+  margin: 3% 0%;
+}
 </style>

@@ -1,19 +1,19 @@
 <template>
     <div>
         <div class="inputToDo">
-            <button @click="isActive = !isActive">add task</button>
+            <svg @click="isActive = !isActive" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
         </div> 
         <div :class="{isActive: isActive}">
             <div class="modal-backdrop">
-                <div class="modal">
+                <div @keyup.enter="addToDo" class="modal">
                     <h3>Title</h3>
-                    <input type="text" placeholder="Title" v-model="task.title">
+                    <input  @keyup.escape="abortToDo()" type="text" placeholder="Title" v-model="task.title">
                     <h3>Description</h3>
                     <textarea name="description" id="" cols="30" rows="10" v-model="task.description"></textarea>
-                    <h3>Select importance</h3>
-                    <select name="" id="" v-model="task.importance">
-                        <option value="Priority">Priority</option>
-                        <option value="Normal">Normal</option>
+                    <select name="" id="" v-model="task.type">
+                        <option default value="task">task</option>
+                        <option value="event">event</option>
+                        <option value="thought">thought</option>
                     </select>
                     <br>
                     <button @click="addToDo">confirm task</button>
@@ -33,16 +33,25 @@ export default {
             task: {
                 title: '',
                 description: '',
-                importance:'',
+                type:'',
+                editing:false,
             },
         }
     },
     computed : mapGetters(['listToDo']),
     methods: {
         addToDo(){
-            this.listToDo.push(this.task);
-            this.task = {title: '', description: '', importance:''};
-            this.isActive = !this.isActive;
+            if(this.task.title == 0){
+                return
+            } else {
+                this.listToDo.push(this.task)
+                this.task = {title: '', description: '', type:'',editing:false};
+                this.isActive = !this.isActive;
+            }
+        },
+        abortToDo(){
+            this.isActive = !this.isActive
+            this.task.title = '';
         }
     }
 }
@@ -51,6 +60,13 @@ export default {
 <style scoped>
     .isActive{
         display: none;
+    }
+    .inputToDo{
+        float: right;
+        margin: 5%;
+    }
+    .inputToDo :hover {
+        cursor: pointer;
     }
     .modal-backdrop {
     display: none;
@@ -72,5 +88,10 @@ export default {
     flex-direction: column;
     padding: 2% 2%;
     border-radius: 10px;
+    }
+    svg {
+        background-color: #1778FA;
+        border-radius: 50%;
+        padding: 10px;
     }
 </style>
