@@ -7,12 +7,12 @@
             <div class="modal-backdrop">
                 <div @keyup.enter="addToDo" class="modal">
                     <h3>Title</h3>
-                    <input  @keyup.escape="abortToDo()" type="text" placeholder="Title" v-model="task.title">
+                    <input  @keyup.escape="abortToDo()" type="text" placeholder="Title" v-model="task.title" maxlength="60">
                     <h3>Description</h3>
-                    <textarea name="description" id="" cols="30" rows="10" v-model="task.description"></textarea>
+                    <textarea v-if="task.type=='task'" name="description" id="" cols="30" rows="10" v-model="task.description"></textarea>
                     <select name="" id="" v-model="task.type">
-                        <option default value="task">task</option>
-                        <option value="event">event</option>
+                        <option default value="event">event</option>
+                        <option value="task">task</option>
                         <option value="thought">thought</option>
                     </select>
                     <br>
@@ -45,7 +45,7 @@ export default {
                 return
             } else {
                 this.listToDo.push(this.task)
-                this.task = {title: '', description: '', type:'',editing:false};
+                this.task = {title: '', description: '', type:'event',editing:false};
                 this.isActive = !this.isActive;
             }
         },
@@ -62,7 +62,6 @@ export default {
         display: none;
     }
     .inputToDo{
-        float: right;
         margin: 5%;
     }
     .inputToDo :hover {
@@ -95,3 +94,4 @@ export default {
         padding: 10px;
     }
 </style>
+

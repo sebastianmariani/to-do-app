@@ -24,10 +24,9 @@ export default {
 
 <style>
 body{
-  background-color: #dbdfe1;
+  background-color: #d3d3d3;
 }
 #app {
-  text-align: center;
   margin: 3%;
 }
 .headers {
