@@ -1,6 +1,5 @@
 <template>
 <div>
-  <p id="date">{{todayDate}}</p>
   <div class="showToDo" v-if="listToDo.length > 0">
       <div class="list" v-for="(todo,index) in listToDo" :key="index">
         <p id="type">{{todo.type}}</p>
@@ -21,13 +20,9 @@ export default {
     return{
       completed:false,
       beforeEditTask: '',
-      todayDate: "",
       showDescription: false,
     }
   },
-   created() {
-                setInterval(this.getNow, 1000);
-   },
   directives: {
     focus: {
       inserted: function (el) {
@@ -54,14 +49,6 @@ export default {
           todo.title = this.beforeEditTask
           todo.editing = false
         },
-        getNow: function() {
-          const today = new Date();
-              let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-              let day = days[today.getDay()];
-              let date = today.getDate();
-              let month = today.getMonth()+1;
-          this.todayDate = `${date}-${month}-${day}`
-        }
     }
 }
 </script>
@@ -93,10 +80,6 @@ export default {
     margin-block-start: 0;
     margin-block-end: 0;
     margin-left: auto;
-  }
-  #date{
-    text-decoration: underline;
-    text-align: center;
   }
   #editToDo{
     outline: none;

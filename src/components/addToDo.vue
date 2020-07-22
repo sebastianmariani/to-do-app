@@ -1,22 +1,27 @@
 <template>
     <div>
         <div class="inputToDo">
-            <svg @click="isActive = !isActive" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
+            <svg id="add" @click="isActive = !isActive" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
         </div> 
         <div :class="{isActive: isActive}">
             <div class="modal-backdrop">
                 <div @keyup.enter="addToDo" class="modal">
                     <h3>Title</h3>
-                    <input  @keyup.escape="abortToDo()" type="text" placeholder="Title" v-model="task.title" maxlength="60">
-                    <h3>Description</h3>
-                    <textarea v-if="task.type=='task'" name="description" id="" cols="30" rows="10" v-model="task.description"></textarea>
-                    <select name="" id="" v-model="task.type">
-                        <option default value="event">event</option>
-                        <option value="task">task</option>
-                        <option value="thought">thought</option>
-                    </select>
+                    <input  @keyup.escape="abortToDo()" type="text" v-model="task.title" maxlength="60">
                     <br>
-                    <button @click="addToDo">confirm task</button>
+                    <div class="taskType">
+                        <div class="type" @click="task.type = 'Idea'">
+                            <p>Idea</p>
+                        </div>
+                        <div class="type" @click="task.type = 'Task'">
+                            <p>Task</p>
+                        </div>
+                        <div class="type" @click="task.type = 'Event'">
+                            <p>Event</p>
+                        </div>
+                    </div>
+                    <br>
+                    <router-link to="/list"><button @click="addToDo">Submit</button></router-link>
                 </div>
             </div>
         </div>
@@ -52,7 +57,7 @@ export default {
         abortToDo(){
             this.isActive = !this.isActive
             this.task.title = '';
-        }
+        },
     }
 }
 </script>
@@ -62,7 +67,7 @@ export default {
         display: none;
     }
     .inputToDo{
-        margin: 5%;
+        margin: 2%;
     }
     .inputToDo :hover {
         cursor: pointer;
@@ -87,11 +92,41 @@ export default {
     flex-direction: column;
     padding: 2% 2%;
     border-radius: 10px;
+    width: 30%;
+    height: auto;
     }
-    svg {
+    #add {
         background-color: #1778FA;
         border-radius: 50%;
         padding: 10px;
+    }
+    h3 {
+        text-align: left;
+        margin-bottom: 2%;
+    }
+    input{
+        background-color: #f3f3f3;
+        outline: none;
+        border: none;
+        border-radius: 5px;
+        padding: 3%;
+    }
+    button {
+        outline: none;
+        border: none;
+        background-color: #1778FA;
+        color: #FFFFFF;
+        border-radius: 5px;
+        padding: 3%;
+    }
+    .taskType{
+        display: flex;
+        justify-content:space-around ;
+    }
+    .type{
+        width: 20%;
+        border-radius: 50%;
+        cursor: pointer;
     }
 </style>
 
