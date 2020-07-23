@@ -1,24 +1,17 @@
 <template>
   <div id="app">
     <div class="header">
-      <h1>LOGO</h1>
+      <router-link id="logo" to="/"><h1>LOGO</h1></router-link>
       <div id="controls">
-        <router-link to="/home"><button>Sign out</button></router-link>
+        <router-link to="/homepage"><button>Sign out</button></router-link>
         <router-link to="/end-day"><button>End-day</button></router-link>
       </div>
-    </div>
-    <div class="addToList">
-      <p>{{todayDate}}</p>
-      <add-to-do></add-to-do>
-      <empty-list v-if="listToDo.length < 1"></empty-list>
     </div>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import addToDo from './components/addToDo';
-import emptyList from './components/emptyList';
 import { mapGetters } from 'vuex';
 
 export default {
@@ -31,10 +24,6 @@ export default {
     setInterval(this.getNow, 1);
   },
   computed : mapGetters(['listToDo']),
-  components: {
-     "add-to-do": addToDo,
-     "empty-list": emptyList,
-  },
   methods: {
     getNow: function() {
       const today = new Date();
@@ -57,6 +46,10 @@ body{
 #app {
   margin: 3%;
 }
+#logo {
+  text-decoration: none;
+  color: black;
+}
 .header{
   display: flex;
   justify-content: space-between;
@@ -70,6 +63,9 @@ body{
   border-radius: 5px;
   padding: 8%;
   width: 150%;
+}
+#date{
+  text-align: center;
 }
 #controls{
   display: flex;

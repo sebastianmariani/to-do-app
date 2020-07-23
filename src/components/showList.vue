@@ -1,14 +1,14 @@
 <template>
 <div>
   <div class="showToDo" v-if="listToDo.length > 0">
-      <div class="list" v-for="(todo,index) in listToDo" :key="index">
-        <p id="type">{{todo.type}}</p>
-        <input type="checkbox" v-model="todo.completed">
-        <div :class="{ completed : todo.completed}" v-if="!todo.editing" @dblclick="editToDo(todo,index)"><p id="title">{{todo.title}}</p></div>
-        <input id="editToDo" maxlength="90" v-else v-model="todo.title" type="text" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" v-focus @keyup.escape="cancelEdit(todo)">
-        <p id="delete" @click="deleteToDo(index)">-</p>
-      </div>
+    <div class="list" v-for="(todo,index) in listToDo" :key="index">
+      <p id="type">{{todo.type}}</p>
+      <input type="checkbox" v-model="todo.completed">
+      <div :class="{ completed : todo.completed}" v-if="!todo.editing" @dblclick="editToDo(todo,index)"><p id="title">{{todo.title}}</p></div>
+      <input id="editToDo" maxlength="90" v-else v-model="todo.title" type="text" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" v-focus @keyup.escape="cancelEdit(todo)">
+      <p id="delete" @click="deleteToDo(index)">-</p>
     </div>
+  </div>
 </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
     return{
       completed:false,
       beforeEditTask: '',
-      showDescription: false,
+      todayDate: "",
     }
   },
   directives: {
