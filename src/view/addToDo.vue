@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div>
-            <p>{{todayDate}}</p>
+            {{todayDate}}
         </div>
         <div class="inputToDo">
             <svg id="add" @click="isActive = !isActive" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
@@ -47,8 +47,9 @@ export default {
                 description: '',
                 type:'event',
                 editing:false,
-                todayDate: "",
+                completed:false,
             },
+            todayDate: '',
         }
     },
     components:{
@@ -65,7 +66,7 @@ export default {
                 return
             } else {
                 this.listToDo.push(this.task)
-                this.task = {title: '', description: '', type:'event',editing:false};
+                this.task = {title: '', description: '', type:'event',editing:false, completed:false};
                 this.isActive = !this.isActive;
             }
         },

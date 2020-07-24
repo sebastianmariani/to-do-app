@@ -1,9 +1,9 @@
 <template>
     <div class="main">
-        <div id="noTaskLeft" v-if="listToDo.length == 0">
+        <div id="noTaskLeft" v-if="listToDo == 0">
             <h3>Seems like you completed all your tasks for today.</h3>
         </div>
-        <div v-if="listToDo.length > 0">
+        <div v-if="listToDo.completed == true">
             <h3>Those are your task left:</h3>
             <div class="tasks" v-for="task in listToDo" :key="task.id">
                 <p>{{task.title}}</p>

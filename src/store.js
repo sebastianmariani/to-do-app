@@ -9,5 +9,6 @@ export const store = new Vuex.Store({
     },
     getters: {
         listToDo: state => state.list,
+        openToDo: state => state.openToDo,
     },
 })

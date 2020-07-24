@@ -1,9 +1,10 @@
 <template>
-<div>
+<div> 
+  {{completedTask}}
   <div class="showToDo" v-if="listToDo.length > 0">
     <div class="list" v-for="(todo,index) in listToDo" :key="index">
       <p id="type">{{todo.type}}</p>
-      <input type="checkbox" v-model="todo.completed">
+      <input type="checkbox" v-model="todo.completed" @click="taskCompleted(todo)">
       <div :class="{ completed : todo.completed}" v-if="!todo.editing" @dblclick="editToDo(todo,index)"><p id="title">{{todo.title}}</p></div>
       <input id="editToDo" maxlength="90" v-else v-model="todo.title" type="text" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" v-focus @keyup.escape="cancelEdit(todo)">
       <p id="delete" @click="deleteToDo(index)">-</p>
@@ -18,9 +19,8 @@ import { mapGetters } from 'vuex';
 export default {
   data(){
     return{
-      completed:false,
       beforeEditTask: '',
-      todayDate: "",
+      completedTask: [],
     }
   },
   directives: {
@@ -49,6 +49,14 @@ export default {
           todo.title = this.beforeEditTask
           todo.editing = false
         },
+        taskCompleted(todo, index){
+          if(todo.completed == false){
+            this.completedTask.push(todo);
+          } else if(todo.completed == true) {
+            
+            this.completedTask.splice(index,1);
+          }
+        }
     }
 }
 </script>
