@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <div>
-            {{todayDate}}
+            <p>{{getDate}}</p>
         </div>
         <div class="inputToDo">
             <svg id="add" @click="isActive = !isActive" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
@@ -14,9 +14,6 @@
                     <input  @keyup.escape="abortToDo()" type="text" v-model="task.title" maxlength="60">
                     <br>
                     <div class="taskType">
-                        <div class="type" @click="task.type = 'idea'">
-                            <p>Idea</p>
-                        </div>
                         <div class="type" @click="task.type = 'task'">
                             <p>Task</p>
                         </div>
@@ -35,6 +32,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import { mapMutations } from 'vuex';
 import emptyList from '../components/emptyList';
 import showList from '../components/showList';
 
@@ -49,18 +47,15 @@ export default {
                 editing:false,
                 completed:false,
             },
-            todayDate: '',
         }
     },
     components:{
         'empty-list': emptyList,
         'show-list': showList,
     },
-    computed : mapGetters(['listToDo']),
-    created() {
-        setInterval(this.getNow, 1);
-    },
+    computed : mapGetters(['listToDo', 'getDate']),
     methods: {
+        ...mapMutations(['getNow']),
         addToDo(){
             if(this.task.title == 0){
                 return
@@ -74,14 +69,6 @@ export default {
             this.isActive = !this.isActive
             this.task.title = '';
         },
-        getNow: function() {
-        const today = new Date();
-          let days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-          let day = days[today.getDay()];
-          let date = today.getDate();
-          let month = today.getMonth()+1;
-        this.todayDate = `${date}-${month}-${day}`
-        }
     }
 }
 </script>
