@@ -1,13 +1,12 @@
 <template>
     <div class="main">
-        <div id="noTaskLeft" v-if="listToDo == 0">
+        <div id="noTaskLeft" v-if="openTasks.length == 0">
             <h3>Seems like you completed all your tasks for today.</h3>
         </div>
-        <div v-if="listToDo.completed == true">
+        <div v-if="openTasks.length > 0">
             <h3>Those are your task left:</h3>
-            <div class="tasks" v-for="task in listToDo" :key="task.id">
+            <div class="tasks" v-for="task in openTasks" :key="task.id">
                 <p>{{task.title}}</p>
-                <button>Move to tomorrow</button>
             </div>
         </div>
     </div>
@@ -17,7 +16,7 @@
 import { mapGetters } from 'vuex';
 
 export default {
-    computed: mapGetters(['listToDo']),
+    computed: mapGetters(['openTasks']),
 }
 </script>
 

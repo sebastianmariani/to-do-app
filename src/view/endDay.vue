@@ -33,14 +33,14 @@
                     <textarea name="explanation" id="" cols="30" rows="10"></textarea>
                     <p>What would you do differently?</p>
                     <textarea name="" id="" cols="30" rows="10"></textarea>
-                    <router-link to="/review-tasks"><button>submit</button></router-link>
+                    <router-link to="/review-tasks"><button @click="taskCompleted()">submit</button></router-link>
                 </div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 
 export default {
     data(){
@@ -49,7 +49,8 @@ export default {
             questionary: false,
         }
     },
-    computed: mapGetters(['listToDo']),
+    computed: mapGetters(['listToDo', 'openTasks']),
+    methods: mapMutations(['taskCompleted'])
 }
 </script>
 
