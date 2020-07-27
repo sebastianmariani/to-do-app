@@ -1,19 +1,32 @@
 <template>
 <div> 
-  <div class="showToDo" v-if="listToDo.length > 0">
-    <div class="list" v-for="(todo,index) in listToDo" :key="index">
-      <p id="type">{{todo.type}}</p>
-      <input type="checkbox" v-model="todo.completed">
-      <div :class="{ completed : todo.completed}" v-if="!todo.editing" @dblclick="editToDo(todo,index)"><p id="title">{{todo.title}}</p></div>
-      <input id="editToDo" maxlength="90" v-else v-model="todo.title" type="text" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" v-focus @keyup.escape="cancelEdit(todo)">
-      <p id="delete" @click="deleteToDo(index)">-</p>
+  <div class="showToDo">
+    <div class="list" v-for="goal in goals" :key="goal.id">
+      <h2>{{goal}}</h2>
+    </div>
+    <div class="addLongTerm">
+        <p>Create a new long term goal</p>
+        <add-button id="add"></add-button>
     </div>
   </div>
+  <!-- <div class="showToDo" v-if="goals.length > 0">
+    <div class="list" v-for="(todo,index) in goals" :key="index">
+      <input type="checkbox" v-model="todo.completed">
+      <div :class="{ completed : todo.completed}" v-if="!todo.editing" @dblclick="editToDo(todo,index)"><p id="title">{{todo.longGoal}}</p></div>
+        <input id="editToDo" maxlength="90" v-else v-model="todo.title" type="text" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" v-focus @keyup.escape="cancelEdit(todo)">
+        <p id="delete" @click="deleteToDo(index)">-</p>
+      </div>
+      <div class="addLongTerm">
+        <p>Create a new long term goal</p>
+        <add-button id="add"></add-button>
+      </div>
+   </div> -->
 </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
+import addButton from '../components/addButton';
 
 export default {
   data(){
@@ -28,7 +41,7 @@ export default {
       }
     }
   },
-  computed: mapGetters(['listToDo']),
+  computed: mapGetters(['listToDo','goals']),
   methods: {
         deleteToDo(index){
             this.listToDo.splice(index , 1)
@@ -47,6 +60,9 @@ export default {
           todo.title = this.beforeEditTask
           todo.editing = false
         },
+    },
+    components: {
+        'add-button': addButton,
     }
 }
 </script>
@@ -54,10 +70,9 @@ export default {
 <style scoped>
   .completed{
     text-decoration: line-through;
-    color: #898888;
   }
   .showToDo {
-    background-color: whitesmoke;
+    background-color: #DFE5C4;
     border-radius: 10px;
     width: 60%;
     margin: 0 auto;
@@ -85,22 +100,23 @@ export default {
     background: transparent;
     width: 80%;
   }
-  #type{
-    font-size: 50%;
-    background-color: #FFC914;
-    border-radius: 5px;
-    padding: 1%;
-    text-align: center;
-    margin: 0 1%;
-    width: 4%;
-  }
   #title{
-    background-color: lightblue;
     margin-block-start: 0;
     margin-block-end: 0;
   }
   input[type=checkbox]{
     width: 6%;
+  }
+  .addLongTerm {
+    display: flex;
+    justify-content:space-around ;
+    width: 20%;
+    align-items: center;
+    float: right;
+    margin-top: 5%;
+  }
+  #add{
+    width: 50px;
   }
 </style>
 

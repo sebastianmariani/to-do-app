@@ -1,49 +1,45 @@
 <template>
     <div class="main">
-        <div>
-            <p>{{getDate}}</p>
-        </div>
-        <div class="inputToDo">
-            <svg id="add" @click="isActive = !isActive" fill="#ffffff" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px"><path fill-rule="evenodd" d="M 11 2 L 11 11 L 2 11 L 2 13 L 11 13 L 11 22 L 13 22 L 13 13 L 22 13 L 22 11 L 13 11 L 13 2 Z"/></svg>
-        </div> 
-        <empty-list v-if="listToDo.length == 0"></empty-list>
+        <header-to-do></header-to-do>
+        <empty-list v-if="goals.length == 0"></empty-list>
         <div :class="{isActive: isActive}">
             <div class="modal-backdrop">
-                <div @keyup.enter="addToDo" class="modal">
+                <div @keyup.enter="setGoal()" class="modal">
+                    <p>Create your first Long-term goal.</p>
                     <h3>Title</h3>
-                    <input  @keyup.escape="abortToDo()" type="text" v-model="task.title" maxlength="60">
                     <br>
-                    <div class="taskType">
-                        <div class="type" @click="task.type = 'task'">
-                            <p>Task</p>
-                        </div>
-                        <div class="type" @click="task.type = 'event'">
-                            <p>Event</p>
-                        </div>
-                    </div>
-                    <br>
-                    <button @click="addToDo">Submit</button>
+                    <input  @keyup.escape="abortToDo()" type="text" v-model="bigGoal" maxlength="60">
+                    <button @click="setGoal()">Add</button>
                 </div>
             </div>
+             <!-- <div class="modal-backdrop">
+                <div @keyup.enter="addToDo" class="modal">
+                    <p>Create your first Long-term goal.</p>
+                    <h3>Title</h3>
+                    <br>
+                    <input  @keyup.escape="abortToDo()" type="text" v-model="task.toDo" maxlength="60">
+                    <button @click="addToDo()">Add</button>
+                </div>
+            </div> -->
         </div>
-        <show-list v-if="listToDo.length > 0"></show-list>
+        <show-list v-if="goals.length > 0"></show-list>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
+import header from '../components/headers';
 import emptyList from '../components/emptyList';
 import showList from '../components/showList';
 
 export default {
     data() {
         return {
-            isActive: true,
+            bigGoal: '',
             task: {
-                title: '',
-                description: '',
-                type:'event',
+                toDo: '',
+                goal:'',
                 editing:false,
                 completed:false,
             },
@@ -52,22 +48,33 @@ export default {
     components:{
         'empty-list': emptyList,
         'show-list': showList,
+        'header-to-do': header,
     },
-    computed : mapGetters(['listToDo', 'getDate']),
+    computed : mapGetters(['listToDo', 'getDate','isActive','goals']),
     methods: {
-        ...mapMutations(['getNow']),
+        ...mapMutations(['getNow','toggleIsActive']),
+        setGoal(){
+            if(this.bigGoal == ''){
+                return
+            } else {
+                this.goals.push(this.bigGoal)
+                this.bigGoal = ''
+                this.toggleIsActive();
+            }
+        },
         addToDo(){
-            if(this.task.title == 0){
+            if(this.task.toDo == ''){
                 return
             } else {
                 this.listToDo.push(this.task)
-                this.task = {title: '', description: '', type:'event',editing:false, completed:false};
-                this.isActive = !this.isActive;
+                this.task = {toDo: '', goal:'',editing:false, completed:false};
+                this.toggleIsActive();
             }
         },
         abortToDo(){
-            this.isActive = !this.isActive
-            this.task.title = '';
+            this.toggleIsActive();
+            this.task.toDo = '';
+            this.bigGoal = '';
         },
     }
 }
@@ -99,20 +106,15 @@ export default {
     align-items: center;
     }
      .modal {
-    background: #FFFFFF;
+    background: #DFE5C4;
     box-shadow: 2px 2px 10px 1px;
     overflow-x: auto;
     display: flex;
     flex-direction: column;
     padding: 2% 2%;
     border-radius: 10px;
-    width: 30%;
+    width: 300px;
     height: auto;
-    }
-    #add {
-        background-color: #1778FA;
-        border-radius: 50%;
-        padding: 10px;
     }
     h3 {
         text-align: left;
@@ -128,10 +130,13 @@ export default {
     button {
         outline: none;
         border: none;
-        background-color: #1778FA;
+        background-color: #667462;
         color: #FFFFFF;
         border-radius: 5px;
         padding: 3%;
+        width: 20%;
+        margin: 0 auto;
+        margin-top: 10%;
     }
     .taskType{
         display: flex;
