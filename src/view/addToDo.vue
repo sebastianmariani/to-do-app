@@ -2,25 +2,27 @@
     <div class="main">
         <header-to-do></header-to-do>
         <empty-list v-if="goals.length == 0"></empty-list>
-        <div :class="{isActive: isActive}">
-            <div class="modal-backdrop">
+        <div :class="{ isActiveGoal : !isActiveGoal }">
+            <div  class="modal-backdrop">
                 <div @keyup.enter="setGoal()" class="modal">
-                    <p>Create your first Long-term goal.</p>
+                    <p>Create your Long-term goal.</p>
                     <h3>Title</h3>
                     <br>
-                    <input  @keyup.escape="abortToDo()" type="text" v-model="bigGoal" maxlength="60">
+                    <input  @keyup.escape="abortGoal()" type="text" v-model="task.goal" maxlength="60">
                     <button @click="setGoal()">Add</button>
                 </div>
             </div>
-             <!-- <div class="modal-backdrop">
-                <div @keyup.enter="addToDo" class="modal">
-                    <p>Create your first Long-term goal.</p>
+        </div>
+        <div :class="{ isActiveTask : !isActiveTask }">
+            <div class="modal-backdrop">
+                <div @keyup.enter="addToDo()" class="modal">
+                    <p>Add task</p>
                     <h3>Title</h3>
                     <br>
-                    <input  @keyup.escape="abortToDo()" type="text" v-model="task.toDo" maxlength="60">
+                    <input  @keyup.escape="abortTask()" type="text" v-model="task.toDo" maxlength="60">
                     <button @click="addToDo()">Add</button>
                 </div>
-            </div> -->
+            </div>
         </div>
         <show-list v-if="goals.length > 0"></show-list>
     </div>
@@ -36,12 +38,18 @@ import showList from '../components/showList';
 export default {
     data() {
         return {
-            bigGoal: '',
+            // bigGoal: '',
+            // task: {
+            //     toDo: '',
+            //     goal:'',
+            //     editing:false,
+            //     completed:false,
+            // },
             task: {
-                toDo: '',
                 goal:'',
-                editing:false,
-                completed:false,
+                toDo: [],
+                editing:true,
+                completed:true,
             },
         }
     },
@@ -50,31 +58,32 @@ export default {
         'show-list': showList,
         'header-to-do': header,
     },
-    computed : mapGetters(['listToDo', 'getDate','isActive','goals']),
+    computed : mapGetters(['listToDo', 'getDate','isActiveTask','isActiveGoal','goals']),
     methods: {
-        ...mapMutations(['getNow','toggleIsActive']),
+        ...mapMutations(['toggleIsActiveGoal', 'toggleIsActiveTask']),
         setGoal(){
-            if(this.bigGoal == ''){
+            if(this.task.goal == ''){
                 return
             } else {
-                this.goals.push(this.bigGoal)
-                this.bigGoal = ''
-                this.toggleIsActive();
+                this.goals.push(this.task.goal)
+                this.task.goal = ''
+                this.toggleIsActiveGoal();
             }
         },
         addToDo(){
             if(this.task.toDo == ''){
                 return
             } else {
-                this.listToDo.push(this.task)
-                this.task = {toDo: '', goal:'',editing:false, completed:false};
-                this.toggleIsActive();
+                this.goals.toDo.push(this.task.toDo)
+                this.toggleIsActiveTask();
             }
         },
-        abortToDo(){
-            this.toggleIsActive();
-            this.task.toDo = '';
-            this.bigGoal = '';
+        abortGoal(){
+            this.toggleIsActiveGoal();
+            this.task.goal = '';
+        },
+        abortTask(){
+            this.toggleIsActiveTask();
         },
     }
 }
@@ -84,7 +93,10 @@ export default {
     .main {
         text-align: center;
     }
-    .isActive{
+    .isActiveGoal{
+        display: none;
+    }
+    .isActiveTask{
         display: none;
     }
     .inputToDo{

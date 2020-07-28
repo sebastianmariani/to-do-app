@@ -2,11 +2,13 @@
 <div> 
   <div class="showToDo">
     <div class="list" v-for="goal in goals" :key="goal.id">
-      <h2>{{goal}}</h2>
+      <h2>{{goal}}</h2><add-button-task id="addToGoal"></add-button-task>
+      <div v-for="task in listToDo" :key="task.id">
+      </div>
     </div>
     <div class="addLongTerm">
         <p>Create a new long term goal</p>
-        <add-button id="add"></add-button>
+        <add-button-goal id="add"></add-button-goal>
     </div>
   </div>
   <!-- <div class="showToDo" v-if="goals.length > 0">
@@ -20,13 +22,14 @@
         <p>Create a new long term goal</p>
         <add-button id="add"></add-button>
       </div>
-   </div> -->
+  </div> -->
 </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
-import addButton from '../components/addButton';
+import addButtonTask from '../components/addButtonTask';
+import addButtonGoal from '../components/addButtonGoal';
 
 export default {
   data(){
@@ -62,7 +65,8 @@ export default {
         },
     },
     components: {
-        'add-button': addButton,
+        'add-button-task': addButtonTask,
+        'add-button-goal': addButtonGoal,
     }
 }
 </script>
@@ -117,6 +121,10 @@ export default {
   }
   #add{
     width: 50px;
+  }
+  #addToGoal{
+    width: 20px;
+    margin-left: 3%;
   }
 </style>
 

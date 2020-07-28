@@ -8,13 +8,16 @@ export const store = new Vuex.Store({
         goals: [],
         list: [],
         todayDate: '',
-        isActive: true,
+        isActiveTask: false,
+        isActiveGoal: false,
+
     },
     getters: {
         listToDo: state => state.list,
         getDate: state => state.todayDate,
-        isActive: state => state.isActive,
+        isActiveTask: state => state.isActiveTask,
         goals: state => state.goals,
+        isActiveGoal: state => state.isActiveGoal,
     },
     mutations: {
         taskCompleted(state){
@@ -30,8 +33,11 @@ export const store = new Vuex.Store({
               let month = today.getMonth()+1;
             state.todayDate = `${date}-${month}-${day}`
         },
-        toggleIsActive(state){
-            state.isActive = !state.isActive
+        toggleIsActiveTask(state){
+            state.isActiveTask = !state.isActiveTask
+        },
+        toggleIsActiveGoal(state){
+            state.isActiveGoal = !state.isActiveGoal
         },
     }
 })

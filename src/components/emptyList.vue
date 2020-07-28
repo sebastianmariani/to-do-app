@@ -1,6 +1,6 @@
 <template>
     <div class="emptyList">
-        <add-button></add-button>
+        <add-button-goal></add-button-goal>
         <div id="text">
             <h2>Start working on your dreams today.</h2>  
         </div>
@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import addButton from '../components/addButton';
+import addButtonGoal from '../components/addButtonGoal';
 
 export default {
     components: {
-        'add-button': addButton,
+        'add-button-goal': addButtonGoal,
     }
 }
 </script>
