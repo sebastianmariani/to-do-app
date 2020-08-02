@@ -8,7 +8,7 @@
                     <p>Create your Long-term goal.</p>
                     <h3>Title</h3>
                     <br>
-                    <input  @keyup.escape="abortGoal()" type="text" v-model="task.goal" maxlength="60">
+                    <input  @keyup.escape="abortGoal()" type="text" v-model="goal" maxlength="60">
                     <button @click="setGoal()">Add</button>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                     <p>Add task</p>
                     <h3>Title</h3>
                     <br>
-                    <input  @keyup.escape="abortTask()" type="text" v-model="task.toDo" maxlength="60">
+                    <input  @keyup.escape="abortTask()" type="text" v-model="todo" maxlength="60">
                     <button @click="addToDo()">Add</button>
                 </div>
             </div>
@@ -38,19 +38,8 @@ import showList from '../components/showList';
 export default {
     data() {
         return {
-            // bigGoal: '',
-            // task: {
-            //     toDo: '',
-            //     goal:'',
-            //     editing:false,
-            //     completed:false,
-            // },
-            task: {
-                goal:'',
-                toDo: [],
-                editing:true,
-                completed:true,
-            },
+            goal:'',
+            todo:'',
         }
     },
     components:{
@@ -62,28 +51,30 @@ export default {
     methods: {
         ...mapMutations(['toggleIsActiveGoal', 'toggleIsActiveTask']),
         setGoal(){
-            if(this.task.goal == ''){
+            if(this.goal == ''){
                 return
             } else {
-                this.goals.push(this.task.goal)
-                this.task.goal = ''
+                this.$store.commit('setGoal', this.goal)
+                this.goal = '';
                 this.toggleIsActiveGoal();
             }
         },
         addToDo(){
-            if(this.task.toDo == ''){
+            if(this.todo == ''){
                 return
             } else {
-                this.goals.toDo.push(this.task.toDo)
+                this.$store.commit('addToDo', this.todo)
+                this.todo = '';
                 this.toggleIsActiveTask();
             }
         },
         abortGoal(){
             this.toggleIsActiveGoal();
-            this.task.goal = '';
+            this.goal = '';
         },
         abortTask(){
             this.toggleIsActiveTask();
+            this.todo = '';
         },
     }
 }

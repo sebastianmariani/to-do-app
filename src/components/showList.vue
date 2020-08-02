@@ -3,8 +3,6 @@
   <div class="showToDo">
     <div class="list" v-for="goal in goals" :key="goal.id">
       <h2>{{goal}}</h2><add-button-task id="addToGoal"></add-button-task>
-      <div v-for="task in listToDo" :key="task.id">
-      </div>
     </div>
     <div class="addLongTerm">
         <p>Create a new long term goal</p>

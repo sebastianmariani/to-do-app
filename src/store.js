@@ -5,12 +5,11 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
     state: {
-        goals: [],
+        goals:[],
         list: [],
         todayDate: '',
         isActiveTask: false,
         isActiveGoal: false,
-
     },
     getters: {
         listToDo: state => state.list,
@@ -38,6 +37,17 @@ export const store = new Vuex.Store({
         },
         toggleIsActiveGoal(state){
             state.isActiveGoal = !state.isActiveGoal
+        },
+        setGoal(state,goal){
+            state.goals.push({
+                goal,
+                toDo:[],
+                editing: true,
+                completed: true,
+            })
+        },
+        addToDo(state,todo){
+            state.goals[0].toDo.push(todo)
         },
     }
 })
