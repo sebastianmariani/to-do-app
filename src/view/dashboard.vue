@@ -3,8 +3,8 @@
         <header-to-do></header-to-do>
         <empty-list v-if="goals.length == 0"></empty-list>
         <div :class="{ isActiveGoal : !isActiveGoal }">
-            <div  class="modal-backdrop">
-                <div @keyup.enter="setGoal()" class="modal">
+        <div  class="modal-backdrop">
+            <div @keyup.enter="setGoal()" class="modal">
                     <p>Create your Long-term goal.</p>
                     <h3>Title</h3>
                     <br>
@@ -13,18 +13,26 @@
                 </div>
             </div>
         </div>
-        <div :class="{ isActiveTask : !isActiveTask }">
-            <div class="modal-backdrop">
-                <div @keyup.enter="addToDo()" class="modal">
-                    <p>Add task</p>
-                    <h3>Title</h3>
-                    <br>
-                    <input  @keyup.escape="abortTask()" type="text" v-model="todo" maxlength="60">
-                    <button @click="addToDo()">Add</button>
+        <div class="showToDo" v-if="goals.length > 0">
+            <div class="list" v-for="(goal, index) in goals" :key="goal.goal">
+                <h2>{{goal}}</h2><add-button-task></add-button-task>
+                <div :class="{ isActiveTask : !isActiveTask }">
+                <div class="modal-backdrop">
+                    <div @keyup.enter="addToDo(index)" class="modal">
+                        <p>Add task to {{goal.goal}}</p>
+                        <h3>Task</h3>
+                        <br>
+                        <input  @keyup.escape="abortTask()" type="text" v-model="todo" maxlength="60">
+                        <button @click="addToDo(index)">Add</button>
+                    </div>
+                    </div>
                 </div>
             </div>
+            <div class="addLongTerm">
+                <p>Create a new long term goal</p>
+                <add-button-goal id="add"></add-button-goal>
+            </div>
         </div>
-        <show-list v-if="goals.length > 0"></show-list>
     </div>
 </template>
 
@@ -33,19 +41,23 @@ import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
 import header from '../components/headers';
 import emptyList from '../components/emptyList';
-import showList from '../components/showList';
+import addButtonTask from '../components/addButtonTask';
+import addButtonGoal from '../components/addButtonGoal';
+
 
 export default {
     data() {
         return {
             goal:'',
             todo:'',
+            index:0,
         }
     },
     components:{
         'empty-list': emptyList,
-        'show-list': showList,
         'header-to-do': header,
+        'add-button-task': addButtonTask,
+        'add-button-goal': addButtonGoal,
     },
     computed : mapGetters(['listToDo', 'getDate','isActiveTask','isActiveGoal','goals']),
     methods: {
@@ -59,13 +71,14 @@ export default {
                 this.toggleIsActiveGoal();
             }
         },
-        addToDo(){
+        addToDo(index){
             if(this.todo == ''){
                 return
             } else {
-                this.$store.commit('addToDo', this.todo)
+                this.$store.commit('addToDo', this.todo, index)
                 this.todo = '';
                 this.toggleIsActiveTask();
+                console.log(index)
             }
         },
         abortGoal(){

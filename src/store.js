@@ -46,8 +46,10 @@ export const store = new Vuex.Store({
                 completed: true,
             })
         },
-        addToDo(state,todo){
-            state.goals[0].toDo.push(todo)
+        addToDo(state,todo,index){
+            state.goals[1].toDo.push(todo)
+            let num = index;
+            console.log(num)
         },
     }
 })
