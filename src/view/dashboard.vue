@@ -13,19 +13,29 @@
                 </div>
             </div>
         </div>
-        <div class="showToDo" v-if="goals.length > 0">
-            <div class="list" v-for="(goal, index) in goals" :key="goal.goal">
-                <h2>{{goal}}</h2><add-button-task></add-button-task>
-                <div :class="{ isActiveTask : !isActiveTask }">
+        <div :class="{ isActiveTask : !isActiveTask }">
                 <div class="modal-backdrop">
-                    <div @keyup.enter="addToDo(index)" class="modal">
+                    <div @keyup.enter="addToDo()" class="modal">
                         <p>Add task to {{goal.goal}}</p>
                         <h3>Task</h3>
                         <br>
                         <input  @keyup.escape="abortTask()" type="text" v-model="todo" maxlength="60">
-                        <button @click="addToDo(index)">Add</button>
+                        <button @click="addToDo()">Add</button>
                     </div>
                     </div>
+                </div>
+        <div class="list" v-if="goals.length > 0">
+            <div v-for="(goal,index) in goals" :key="goal.goal">
+                <div class="goal">
+                    <h2>{{goal.goal}}</h2> 
+                    <svg  @click="setIndex(index), toggleIsActiveTask()" width="20" height="20" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M23 44C10.8497 44 1 34.1503 1 22C1 9.84974 10.8497 0 23 0C35.1503 0 45 9.84974 45 22C45 34.1503 35.1503 44 23 44Z" fill="#FF8F79"/>
+                        <path d="M37.9018 21H7.5488C6.69344 21 6 21.6934 6 22.5488C6 23.4042 6.69344 24.0976 7.5488 24.0976H37.9018C38.7571 24.0976 39.4506 23.4042 39.4506 22.5488C39.4506 21.6934 38.7571 21 37.9018 21Z" fill="white"/>
+                        <path d="M22 6.5488V36.9018C22 37.7571 22.6934 38.4506 23.5488 38.4506C24.4042 38.4506 25.0976 37.7571 25.0976 36.9018V6.5488C25.0976 5.69344 24.4042 5 23.5488 5C22.6934 5 22 5.69344 22 6.5488Z" fill="white"/>
+                    </svg>
+                </div>
+                <div v-for="task in goal.toDo" :key="task.id">
+                    <input type="checkbox">{{task}}
                 </div>
             </div>
             <div class="addLongTerm">
@@ -41,7 +51,6 @@ import { mapGetters } from 'vuex';
 import { mapMutations } from 'vuex';
 import header from '../components/headers';
 import emptyList from '../components/emptyList';
-import addButtonTask from '../components/addButtonTask';
 import addButtonGoal from '../components/addButtonGoal';
 
 
@@ -50,13 +59,12 @@ export default {
         return {
             goal:'',
             todo:'',
-            index:0,
+            index: 0,
         }
     },
     components:{
         'empty-list': emptyList,
         'header-to-do': header,
-        'add-button-task': addButtonTask,
         'add-button-goal': addButtonGoal,
     },
     computed : mapGetters(['listToDo', 'getDate','isActiveTask','isActiveGoal','goals']),
@@ -71,14 +79,13 @@ export default {
                 this.toggleIsActiveGoal();
             }
         },
-        addToDo(index){
+        addToDo(){
             if(this.todo == ''){
                 return
             } else {
-                this.$store.commit('addToDo', this.todo, index)
+                this.$store.commit('addToDo',this.todo)
                 this.todo = '';
                 this.toggleIsActiveTask();
-                console.log(index)
             }
         },
         abortGoal(){
@@ -89,14 +96,17 @@ export default {
             this.toggleIsActiveTask();
             this.todo = '';
         },
+        setIndex(index){
+            this.$store.commit('setIndex', index)
+        },
+        editToDo(todo){
+            todo
+        }
     }
 }
 </script>
 
 <style scoped>
-    .main {
-        text-align: center;
-    }
     .isActiveGoal{
         display: none;
     }
@@ -121,7 +131,7 @@ export default {
     justify-content: center;
     align-items: center;
     }
-     .modal {
+    .modal {
     background: #DFE5C4;
     box-shadow: 2px 2px 10px 1px;
     overflow-x: auto;
@@ -131,6 +141,7 @@ export default {
     border-radius: 10px;
     width: 300px;
     height: auto;
+    text-align: center;
     }
     h3 {
         text-align: left;
@@ -154,14 +165,23 @@ export default {
         margin: 0 auto;
         margin-top: 10%;
     }
-    .taskType{
-        display: flex;
-        justify-content:space-around ;
+    .list{
+        margin: auto;
+        width: 80%;
+        background-color: #DFE5C4;
+        border-radius: 10px;
+        padding: 2%;
     }
-    .type{
-        width: 20%;
-        border-radius: 50%;
-        cursor: pointer;
+    svg{
+        display: inline-block;
+        margin-left: 5%;
+    }
+    h2{
+        display: inline-block;
+    }
+    .addLongTerm{
+        float: right;
+        margin-top: 5%;
     }
 </style>
 

@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
         todayDate: '',
         isActiveTask: false,
         isActiveGoal: false,
+        index: 0,
     },
     getters: {
         listToDo: state => state.list,
@@ -41,15 +42,21 @@ export const store = new Vuex.Store({
         setGoal(state,goal){
             state.goals.push({
                 goal,
-                toDo:[],
+                toDo:[],    
                 editing: true,
                 completed: true,
             })
         },
-        addToDo(state,todo,index){
-            state.goals[1].toDo.push(todo)
-            let num = index;
-            console.log(num)
+        addToDo(state,todo){
+            let goal = state.goals[state.index];
+            goal.toDo.push({
+                todo,
+                editing:true,
+            completed: true,
+            })
         },
+        setIndex(state, index){
+            state.index = index;
+        }
     }
 })
