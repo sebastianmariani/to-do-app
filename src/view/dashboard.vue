@@ -35,7 +35,9 @@
                     </svg>
                 </div>
                 <div v-for="task in goal.toDo" :key="task.id">
-                    <input type="checkbox">{{task}}
+                    <div :class=" { completed : task.completed } ">
+                        <input v-model="task.completed" type="checkbox">{{task.todo}}
+                    </div>
                 </div>
             </div>
             <div class="addLongTerm">
@@ -99,9 +101,6 @@ export default {
         setIndex(index){
             this.$store.commit('setIndex', index)
         },
-        editToDo(todo){
-            todo
-        }
     }
 }
 </script>
@@ -182,6 +181,9 @@ export default {
     .addLongTerm{
         float: right;
         margin-top: 5%;
+    }
+    .completed {
+        text-decoration: line-through;
     }
 </style>
 
