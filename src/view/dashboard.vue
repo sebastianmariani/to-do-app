@@ -34,15 +34,14 @@
                         <path d="M22 6.5488V36.9018C22 37.7571 22.6934 38.4506 23.5488 38.4506C24.4042 38.4506 25.0976 37.7571 25.0976 36.9018V6.5488C25.0976 5.69344 24.4042 5 23.5488 5C22.6934 5 22 5.69344 22 6.5488Z" fill="white"/>
                     </svg>
                 </div>
-                <div v-for="task in goal.toDo" :key="task.id">
+                <div class="tasks" v-for="task in goal.toDo" :key="task.id">
                     <div :class=" { completed : task.completed } ">
-                        <input v-model="task.completed" type="checkbox">{{task.todo}}
+                        <input v-model="task.completed" type="checkbox"> {{task.todo}}
                     </div>
                 </div>
             </div>
             <div class="addLongTerm">
-                <p>Create a new long term goal</p>
-                <add-button-goal id="add"></add-button-goal>
+                <p>Create a new long term goal</p><add-button-goal id="add"></add-button-goal>
             </div>
         </div>
     </div>
@@ -166,24 +165,35 @@ export default {
     }
     .list{
         margin: auto;
-        width: 80%;
+        width: 60%;
         background-color: #DFE5C4;
         border-radius: 10px;
         padding: 2%;
     }
     svg{
-        display: inline-block;
         margin-left: 5%;
     }
-    h2{
-        display: inline-block;
-    }
     .addLongTerm{
-        float: right;
         margin-top: 5%;
+        display: flex;
+        align-items: center;
+        float: right;
+        white-space: nowrap;
     }
     .completed {
         text-decoration: line-through;
+    }
+    .tasks{
+        padding: 2%;
+        border-left: 2px solid #667462;
+        margin: 0 10%;
+    }
+    .goal{
+        display: flex;
+        align-items: center;
+        white-space: nowrap;
+        text-decoration: underline;
+        margin: 0 10%;
     }
 </style>
 
