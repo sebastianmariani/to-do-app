@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
         isActiveTask: false,
         isActiveGoal: false,
         indexGoal: 0,
+        taskToDelete:'',
     },
     getters: {
         listToDo: state => state.list,
@@ -48,6 +49,7 @@ export const store = new Vuex.Store({
         },
         addToDo(state,todo){
             state.goals[state.indexGoal].toDo.push({
+                goal: state.indexGoal,
                 todo,
                 editing:false,
                 completed: false,
