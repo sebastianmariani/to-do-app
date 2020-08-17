@@ -41,7 +41,10 @@
                 </div>
                 <div class="tasks" v-for="(task, index) in goal.toDo" :key="task.id">
                     <div :class=" { completed : task.completed } ">
-                        <input v-model="task.completed" type="checkbox">{{task.todo}}
+                        <div v-if="!task.editing" @dblclick="editToDo(task)">
+                            <input v-model="task.completed" type="checkbox">{{task.todo}}
+                        </div>
+                        <input id="changeToDoInput" v-else type="text" v-model="task.todo" @blur="doneEdit(task)" @keyup.enter="doneEdit(task)" @keyup.esc="cancelEdit(task)">
                         <svg  class="delete" @click="deleteTask(task, index)" width="10" height="10" viewBox="0 0 54 5" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <line y1="2.5" x2="54" y2="2.5" stroke="#667462" stroke-width="10"/>
                         </svg>
@@ -69,6 +72,8 @@ export default {
             goal:'',
             todo:'',
             taskToDelete: '',
+            changedToDo: '',
+            beforeEditCache: '',
         }
     },
     components:{
@@ -111,10 +116,26 @@ export default {
         deleteGoal(goal, index){
             if(goal.toDo == 0){
                 this.$store.state.goals.splice(index,1)
+            } else {
+                return
             }
         },
         deleteTask(task, index){
             this.$store.state.goals[task.goal].toDo.splice(index,1)
+        },
+        editToDo(task){
+            this.beforeEditCache = task.todo;
+            task.editing = true;
+        },
+        doneEdit(task){
+            if(task.todo.trim().length == 0){
+                task.todo = this.beforeEditCache
+            }
+            task.editing = false;
+        },
+        cancelEdit(task){
+            task.editing = false;
+            task.todo = this.beforeEditCache;
         }
     }
 }
@@ -221,6 +242,16 @@ export default {
         align-items: center;
         justify-content: space-between;
         margin-right: 10%;
+    }
+    #changeToDoInput{
+        background-color: #DFE5C4;
+        color: #667462;
+        padding: 0 5%;
+        margin-left: 5%;
+        font-size: 1em;
+        width: 80%;
+        border-bottom:1px solid #667462;
+        border-radius: 0px;
     }
 </style>
 
