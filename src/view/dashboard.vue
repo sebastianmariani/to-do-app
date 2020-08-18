@@ -19,7 +19,7 @@
                         <p>Add task to {{goal.goal}}</p>
                         <h3>Task</h3>
                         <br>
-                        <input  @keyup.escape="abortTask()" type="text" v-model="todo" maxlength="60">
+                        <input  @keyup.escape="abortTask()" type="text" v-model="todo" maxlength="100">
                         <button @click="addToDo()">Add</button>
                     </div>
                     </div>
@@ -40,7 +40,7 @@
                     </svg>
                 </div>
                 <div class="tasks" v-for="(task, index) in goal.toDo" :key="task.id">
-                    <div :class=" { completed : task.completed } ">
+                    <div id="task" :class=" { completed : task.completed } ">
                         <div v-if="!task.editing" @dblclick="editToDo(task)">
                             <input v-model="task.completed" type="checkbox">{{task.todo}}
                         </div>
@@ -208,9 +208,6 @@ export default {
         border-radius: 10px;
         padding: 2%;
     }
-    svg{
-        margin-left: 5%;
-    }
     .addLongTerm{
         margin-top: 5%;
         display: flex;
@@ -220,18 +217,25 @@ export default {
     }
     .completed {
         text-decoration: line-through;
+        color: #97aa91;
     }
     .tasks{
-        padding: 2% 0;
+        padding: 1% 0;
         border-left: 2px solid #667462;
         margin: 0 10%;
+    }
+    #task{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
     }
     .goal{
         display: flex;
         align-items: center;
-        white-space: nowrap;
         text-decoration: underline;
         margin: 0 10%;
+        width: 80%;
+        justify-content: space-between;
     }
     .delete{
         float: right;
@@ -252,6 +256,9 @@ export default {
         width: 80%;
         border-bottom:1px solid #667462;
         border-radius: 0px;
+    }
+    #add{
+        margin-left: 5%;
     }
 </style>
 

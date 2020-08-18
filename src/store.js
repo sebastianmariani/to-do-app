@@ -31,7 +31,7 @@ export const store = new Vuex.Store({
               let day = days[today.getDay()];
               let date = today.getDate();
               let month = today.getMonth()+1;
-            state.todayDate = `${date}-${month}-${day}`
+            state.todayDate = `${date} - ${month} - ${day}`
         },
         toggleIsActiveTask(state){
             state.isActiveTask = !state.isActiveTask
