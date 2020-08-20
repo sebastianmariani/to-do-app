@@ -34,4 +34,17 @@ export default {
         margin-top: 2%;
         margin-bottom: 5%;
     }
+    @media only screen and (max-width: 550px){
+        a{
+            width: 20%;
+        }
+    }
+     @media only screen and (max-width: 430px){
+        svg{
+            width: 70%;
+        }
+        .header{
+            font-size: .8em;
+        }
+    }
 </style>

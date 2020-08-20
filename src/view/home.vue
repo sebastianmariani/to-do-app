@@ -50,4 +50,15 @@ export default {
     width: 10%;
     cursor: pointer;
     }
+    @media only screen and (max-width: 498px){
+        svg{
+            width: 50%;
+        }
+        button{
+            width: 15%;
+        }
+        .home{
+        margin-top: 10vh;
+        }
+    }
 </style>
