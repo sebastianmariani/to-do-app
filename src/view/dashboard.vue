@@ -238,9 +238,13 @@ export default {
         width: 70%;
         justify-content: space-between;
     }
+    .goal svg {
+        margin-left: 2%;
+    }
     .delete{
         float: right;
         cursor: pointer;
+        margin-left: 5%;
     }
     .headerGoal{
         display: flex;
@@ -268,6 +272,11 @@ export default {
     }
     #checkboxTask p{
         margin-left: .5em;
+    }
+    @media only screen and (max-width: 400px){
+        .modal{
+            width: 220px;
+        }
     }
 </style>
 
