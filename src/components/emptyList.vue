@@ -63,7 +63,7 @@ export default {
             height: auto;
         }
         #text{
-            font-size: 1em;
+            font-size: .6em;
         }
     }
 </style>
