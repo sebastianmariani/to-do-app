@@ -16,7 +16,7 @@
         <div :class="{ isActiveTask : !isActiveTask }">
                 <div class="modal-backdrop">
                     <div @keyup.enter="addToDo()" class="modal">
-                        <p>Add task to {{goal.goal}}</p>
+                        <p>Add task</p>
                         <h3>Task</h3>
                         <br>
                         <input  @keyup.escape="abortTask()" type="text" v-model="todo" maxlength="80">
@@ -29,7 +29,7 @@
                 <div class="headerGoal">
                     <div class="goal">
                         <h2>{{goal.goal}}</h2> 
-                        <svg @click="setIndex(index), toggleIsActiveTask()" width="20" height="20" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <svg id="addToDo" @click="setIndex(index), toggleIsActiveTask()" width="20" height="20" viewBox="0 0 45 45" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M23 44C10.8497 44 1 34.1503 1 22C1 9.84974 10.8497 0 23 0C35.1503 0 45 9.84974 45 22C45 34.1503 35.1503 44 23 44Z" fill="#FF8F79"/>
                             <path d="M37.9018 21H7.5488C6.69344 21 6 21.6934 6 22.5488C6 23.4042 6.69344 24.0976 7.5488 24.0976H37.9018C38.7571 24.0976 39.4506 23.4042 39.4506 22.5488C39.4506 21.6934 38.7571 21 37.9018 21Z" fill="white"/>
                             <path d="M22 6.5488V36.9018C22 37.7571 22.6934 38.4506 23.5488 38.4506C24.4042 38.4506 25.0976 37.7571 25.0976 36.9018V6.5488C25.0976 5.69344 24.4042 5 23.5488 5C22.6934 5 22 5.69344 22 6.5488Z" fill="white"/>
@@ -238,7 +238,7 @@ export default {
         width: 70%;
         justify-content: space-between;
     }
-    .goal svg {
+    #addToDo {
         margin-left: 2%;
     }
     .delete{
@@ -281,6 +281,13 @@ export default {
     @media only screen and (max-width: 740px){
         .list{
             font-size: .5em;
+        }
+        #add{
+            width: 18px;
+        }
+        #addToDo{
+            width: 10px;
+            height: 10px;
         }
     }
     @media only screen and (max-width: 400px){
