@@ -42,7 +42,7 @@
                 <div class="tasks" v-for="(task, index) in goal.toDo" :key="task.id">
                     <div id="task" :class=" { completed : task.completed } ">
                         <div id="checkboxTask" v-if="!task.editing" @dblclick="editToDo(task)">
-                            <input v-model="task.completed" type="checkbox"><p>{{task.todo}}</p>
+                            <input v-model="task.completed" type="checkbox"><label>{{task.todo}}</label>  
                         </div>
                         <input id="changeToDoInput" v-else type="text" v-model="task.todo" @blur="doneEdit(task)" @keyup.enter="doneEdit(task)" @keyup.esc="cancelEdit(task)" v-focus>
                         <svg  class="delete" @click="deleteTask(task, index)" width="10" height="10" viewBox="0 0 54 5" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -92,7 +92,7 @@ export default {
     methods: {
         ...mapMutations(['toggleIsActiveGoal', 'toggleIsActiveTask']),
         setGoal(){
-            if(this.goal == ''){
+            if(this.goal === ''){
                 return
             } else {
                 this.$store.commit('setGoal', this.goal)
@@ -101,7 +101,7 @@ export default {
             }
         },
         addToDo(){
-            if(this.todo == ''){
+            if(this.todo === ''){
                 return
             } else {
                 this.$store.commit('addToDo',this.todo)
@@ -121,14 +121,18 @@ export default {
             this.$store.commit('setIndex', index)
         },
         deleteGoal(goal, index){
-            if(goal.toDo == 0){
-                this.$store.state.goals.splice(index,1)
-            } else {
-                return
+            const data = {
+                goal: goal,
+                index: index
             }
+            this.$store.commit('deleteGoal', data)
         },
         deleteTask(task, index){
-            this.$store.state.goals[task.goal].toDo.splice(index,1)
+            const data = {
+                task: task,
+                index: index
+            }
+            this.$store.commit('deleteTask', data)
         },
         editToDo(task){
             if(task.completed != true){

@@ -58,5 +58,16 @@ export const store = new Vuex.Store({
         setIndex(state, index){
             state.indexGoal = index;
         },
+        deleteTask(state, data){
+            state.goals.getters[data.task.goal].toDo.splice(data.index, 1)
+        },
+        deleteGoal(state, data){
+            state.goals
+            if(data.goal.toDo == 0){
+                state.goals.splice(data.index, 1)
+            } else {
+                return
+            }
+        }
     }
 })
