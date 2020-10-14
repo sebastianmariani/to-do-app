@@ -9,11 +9,11 @@ export const store = new Vuex.Store({
         todayDate: '',
         isActiveTask: false,
         isActiveGoal: false,
-        indexGoal: 0,
+        addToGoal: '',
+        indexGoal:0,
         taskToDelete:'',
     },
     getters: {
-        listToDo: state => state.list,
         getDate: state => state.todayDate,
         isActiveTask: state => state.isActiveTask,
         goals: state => state.goals,
@@ -48,23 +48,30 @@ export const store = new Vuex.Store({
             })
         },
         addToDo(state,todo){
-            state.goals[state.indexGoal].toDo.push({
-                goal: state.indexGoal,
+            const data = {
+                goal: state.addToGoal,
                 todo,
-                editing:false,
-                completed: false,
-            })
+                editing: false,
+                completed: false
+            }
+            state.goals[state.indexGoal].toDo.push(data)
         },
-        setIndex(state, index){
-            state.indexGoal = index;
+        setIndex(state, data){
+            state.addToGoal = data.goal.goal
+            state.indexGoal = data.index
         },
         deleteTask(state, data){
-            state.goals.getters[data.task.goal].toDo.splice(data.index, 1)
+            //problem is here
+            const location = state.goals.map(function(e) { 
+                return e.goal; 
+            }).indexOf(data.task.goal); 
+            state.goals[location].toDo.splice(data.index,1)
         },
-        deleteGoal(state, data){
-            state.goals
-            if(data.goal.toDo == 0){
-                state.goals.splice(data.index, 1)
+        deleteGoal(state, data){    
+            const location = state.goals.indexOf(data.goal)
+            console.log(location)
+            if(data.goal.toDo.length === 0){
+                state.goals.splice(location, 1)
             } else {
                 return
             }
