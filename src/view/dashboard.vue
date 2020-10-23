@@ -41,8 +41,14 @@
                 </div>
                 <div class="tasks" v-for="(task, index) in goal.toDo" :key="task.id">
                     <div id="task" :class=" { completed : task.completed } ">
-                        <div id="checkboxTask" v-if="!task.editing" @dblclick="editToDo(task)">
+                        <!-- <div id="checkboxTask" v-if="!task.editing" @dblclick="editToDo(task)">
                             <input v-model="task.completed" type="checkbox"><label>{{task.todo}}</label>  
+                        </div> -->
+                        <div id="checkboxTask" v-if="!task.editing">
+                            <div>
+                                <input  type="checkbox" v-model="task.completed">
+                            </div>
+                            <label for="checkbox" @dblclick="editToDo(task)">{{task.todo}}</label>
                         </div>
                         <input id="changeToDoInput" v-else type="text" v-model="task.todo" @blur="doneEdit(task)" @keyup.enter="doneEdit(task)" @keyup.esc="cancelEdit(task)" v-focus>
                         <svg  class="delete" @click="deleteTask(task, index)" width="10" height="10" viewBox="0 0 54 5" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -286,6 +292,9 @@ export default {
     }
     #checkboxTask p{
         margin-left: .5em;
+    }
+    input[type=checkbox] {
+        visibility: hidden;
     }
     @media only screen and (max-width: 1400px){
         .list{
