@@ -61,7 +61,6 @@ export const store = new Vuex.Store({
             state.indexGoal = data.index
         },
         deleteTask(state, data){
-            //problem is here
             const location = state.goals.map(function(e) { 
                 return e.goal; 
             }).indexOf(data.task.goal); 
