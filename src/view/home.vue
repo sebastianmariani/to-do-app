@@ -19,7 +19,7 @@
         </svg>
         <div>
             <p>Welcome to goals journey. <br>Join us and change your long-term goals <br> from dreams to reality.</p>
-            <router-link to="/dashboard"><button @click="getNow()">Log in</button></router-link>
+            <router-link to="/dashboard"><button @click="getNow()">Start Now</button></router-link>
         </div>
     </div>
 </template>
