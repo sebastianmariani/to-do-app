@@ -11,7 +11,7 @@
     "core-js": "^3.6.5",
     "highlight": "^0.2.4",
     "highlight.js": "^10.6.0",
-    "is-svg": "^4.2.2",
+    "is-svg": "^4.3.0",
     "node-forge": "^0.10.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
