@@ -11,7 +11,7 @@
     "core-js": "^3.6.5",
     "highlight": "^0.2.4",
     "highlight.js": "^10.6.0",
-    "is-svg": "^4.3.0",
+    "is-svg": "^4.4.0",
     "node-forge": "^0.10.0",
     "vue": "^2.6.11",
     "vue-axios": "^2.1.5",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.4.0",
     "@vue/cli-plugin-eslint": "~4.4.0",
-    "@vue/cli-service": "^3.12.1",
+    "@vue/cli-service": "^5.0.8",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
